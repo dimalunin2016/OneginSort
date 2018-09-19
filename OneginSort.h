@@ -7,7 +7,7 @@
 #include "Text.h"
 
 
-const size_t NUM_OF_BAD_SYMB            = 30;
+const size_t NUM_OF_BAD_SYMB           = 30;
 const char BadSymbols[NUM_OF_BAD_SYMB] = ".,;:!?«»()—… []\"'*-";
 
 
