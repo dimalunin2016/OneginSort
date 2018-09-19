@@ -194,7 +194,7 @@ class OneginSortClass {
    */
   void DoTask() {
  	  
-		text_.PrintCommonInfo();
+	text_.PrintCommonInfo();
   	text_.Sort(Comporator);
   	text_.PrintCurrentText(OutFile1_);
   	text_.Sort(RhymeComporator);

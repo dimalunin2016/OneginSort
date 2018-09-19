@@ -34,6 +34,7 @@ class CleverFile {
       fprintf (stderr, "Can not open file %s\n", FileName);
       assert(file_);
     }
+    file_ = fopen(FileName, "r");
   }
  
 
@@ -92,10 +93,10 @@ class TextLine {
       assert(IsStartedByte(str[0]));
     }
     symbol_parts_ = str;
-		size_         = 0;
-		for (size_t i = 0; str[i]; ++i) {
-			++size_;
-	  }
+    size_         = 0;
+    for (size_t i = 0; str[i]; ++i) {
+	    ++size_;
+    }
   }
 
 
@@ -109,7 +110,7 @@ class TextLine {
       assert(IsStartedByte(str[0]));
     }
     symbol_parts_   = str;
-		size_           = size;
+    size_           = size;
   }
 
 
@@ -153,8 +154,8 @@ class TextLine {
 class Text {
  private:
 
-	char* text_             = nullptr;
-	TextLine* origin_lines_ = nullptr;
+  char* text_             = nullptr;
+  TextLine* origin_lines_ = nullptr;
   TextLine* curr_lines_   = nullptr;
   size_t num_of_lines_;
   size_t text_size_in_bytes_;
@@ -177,7 +178,7 @@ class Text {
 
   void CopyText(const char* FileName) {
     
-		struct stat stat_buf;
+    struct stat stat_buf;
     int exit = stat(FileName, &stat_buf);
     if (exit != 0) {
       fprintf (stderr, "Can not open file %s\n", FileName);
@@ -187,7 +188,7 @@ class Text {
     size_t size = stat_buf.st_size;
     CleverFile read_file;
     read_file.FileToRead(FileName);
- 		text_ = new char[size + 2];
+    text_ = new char[size + 2];
     fread(text_, sizeof(char), size, read_file.GetFile());
     
     text_[size]         = '\n';

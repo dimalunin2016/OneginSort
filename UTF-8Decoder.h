@@ -57,8 +57,8 @@ class Symbol {
       }
     }
   
-    size_   = (size_ == 0) ? 1 : size_;
-    start_  = str;
+    size_  = (size_ == 0) ? 1 : size_;
+    start_ = str;
   }
 
 
