@@ -10,16 +10,16 @@ static const char *optString = "I:O:";
 void InCaseOfInput(
     char** InputFileName, 
     const char* param_str, 
-    int* curr_input_file) {
+    int* num_of_curr_input_files) {
 
 
-  if (*curr_input_file >= 2) {
+  if (*num_of_curr_input_files >= 2) {
     fprintf (stderr, "Wrong number of input parameters\n");
     assert(false);
   }
 
   strcpy(*InputFileName, param_str);
-  ++(*curr_input_file);
+  ++(*num_of_curr_input_files);
 }
 
 
@@ -28,9 +28,9 @@ void InCaseOfOutput(
     char** OutputFileName2,
     char** OutputFileName3,
     const char* param_str,
-    int* curr_output_file) {
+    int* num_of_curr_output_files) {
 
-  switch (*curr_output_file) {
+  switch (*num_of_curr_output_files) {
     case 1:
 
       strcpy(*OutputFileName1, param_str);
@@ -50,7 +50,7 @@ void InCaseOfOutput(
       break;
   } 
         
-  ++(*curr_output_file);
+  ++(*num_of_curr_output_files);
 }
 
 
@@ -74,13 +74,13 @@ void GetCommandParams(int argc, char **argv,
     char* OutputFileName3, bool* is_any_output) {
   
   int opt = 0;
-  int curr_output_file = 1;
-  int curr_input_file = 1;
+  int num_of_curr_output_files = 1;
+  int num_of_curr_input_files = 1;
 
   while ((opt = getopt (argc, argv, optString)) != -1) {
     switch (opt) {
       case 'I':
-        InCaseOfInput(&InputFileName, optarg, &curr_input_file);
+        InCaseOfInput(&InputFileName, optarg, &num_of_curr_input_files);
         break;
       
       case 'O':
@@ -89,7 +89,7 @@ void GetCommandParams(int argc, char **argv,
             &OutputFileName1, 
             &OutputFileName2, 
             &OutputFileName3,
-            optarg, &curr_output_file);
+            optarg, &num_of_curr_output_files);
         break;
 
       case '?':
@@ -101,9 +101,9 @@ void GetCommandParams(int argc, char **argv,
     }
   }
 
-  if (!(curr_input_file == 2 && 
-        (curr_output_file == 1 || 
-         curr_output_file == 4))) {
+  if (!(num_of_curr_input_files == 2 && 
+        (num_of_curr_output_files == 1 || 
+         num_of_curr_output_files == 4))) {
     fprintf (stderr, "Wrong number of parameters\n"); 
     assert(false);
   }
