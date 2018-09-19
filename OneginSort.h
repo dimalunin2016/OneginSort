@@ -1,7 +1,14 @@
+/**
+ * @author Dmitry Lunin
+ * @date 19.09.2018
+ * @version 1.0
+ * \file
+ */
 #include "Text.h"
 
+
 const size_t NUM_OF_BAD_SYMB            = 30;
-const char BadSymbols[NUM_OF_BAD_SYMB] = ".,;:!?«»()—…";
+const char BadSymbols[NUM_OF_BAD_SYMB] = ".,;:!?«»()—… []\"'*-";
 
 
 bool InArray(const Symbol& a, const char* check_arr) {
@@ -116,11 +123,83 @@ bool CompHelper(const TextLine& a, const TextLine& b, bool reversed) {
 }
 
 
+/**
+ * @brief compares TextLines by the beginning of the word
+ */
 bool Comporator(const TextLine& a, const TextLine& b) {
+  
   return CompHelper(a, b, false);
 }
 
 
+/**
+ * @brief compares TextLines by the ending of the word
+ */
 bool RhymeComporator(const TextLine& a, const TextLine& b) {
+  
   return CompHelper(a, b, true);
 }
+
+
+/**
+ * @brief Solves this task https://sizeof.livejournal.com/36283.html
+ */
+class OneginSortClass {
+ private:
+  
+  Text text_;
+  const char* OutFile1_;
+  const char* OutFile2_;
+  const char* OutFile3_;
+ public:
+  OneginSortClass() {}
+
+
+  /**
+   * @param [in] InputFile, from which you need to read the text
+   * @param [in] OutFile1, OutFile2, OutFile3 - names of file, 
+   *    in which you want to write the result
+   */ 
+  void CreateTask(
+      const char* InputFile, 
+      const char* OutFile1 = "Sorted.txt",
+      const char* OutFile2 = "RhymeSorted.txt",
+      const char* OutFile3 = "CopyText.txt") {
+
+    text_.CreateText(InputFile);
+    OutFile1_ = OutFile1;
+    OutFile2_ = OutFile2;
+    OutFile3_ = OutFile3;
+  }
+
+ 
+  /**
+   * @param [in] InputFile, from which you need to read the text
+   * @param [in] OutFile1, OutFile2, OutFile3 - names of file, 
+   *    in which you want to write the result
+   */
+  OneginSortClass(
+      const char* InputFile, 
+      const char* OutFile1 = "Sorted.txt",
+      const char* OutFile2 = "RhymeSorted.txt",
+      const char* OutFile3 = "CopyText.txt") {
+      
+      CreateTask(InputFile, OutFile1, OutFile2, OutFile3);
+    }
+
+
+  /**
+   * @brief this function solves the task and prints in stdin 
+   *    all common information about text from input file
+   */
+  void DoTask() {
+ 	  
+		text_.PrintCommonInfo();
+  	text_.Sort(Comporator);
+  	text_.PrintCurrentText(OutFile1_);
+  	text_.Sort(RhymeComporator);
+  	text_.PrintCurrentText(OutFile2_);
+  	text_.PrintOriginText(OutFile3_); 
+  }
+  
+};

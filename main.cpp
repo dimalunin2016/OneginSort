@@ -1,15 +1,21 @@
 #include "OneginSort.h"
+#include "CommandParams.h"
 
-int main() {
-  Text text("Onegin.txt");
-  text.PrintCommonInfo("CommonInfo.txt");
-  LinesArray res = text.GetPointerToCurrentText();
-  text.Sort(Comporator);
-  res.PrintOnlyPoems("Encyclopedia.txt");
-  text.Sort(RhymeComporator);
-  res.PrintOnlyPoems("Rhyme.txt");
-  text.ReturnCurrentTextToOriginal();
-  const LinesArray orig = text.GetPointerToOriginalText();
-  orig.Print("RealOnegin.txt");
+int main(int argc, char **argv) {
+  char InputFile[MAX_PATH_SIZE];
+  char Out1[MAX_PATH_SIZE]; 
+  char Out2[MAX_PATH_SIZE]; 
+  char Out3[MAX_PATH_SIZE];
+  bool is_any_output = false;
+  GetCommandParams(argc, argv, InputFile, Out1, Out2, Out3, &is_any_output);
+  OneginSortClass ans; 
+  if (!is_any_output) {
+    
+    ans.CreateTask(InputFile);
+  } else {
+    
+    ans.CreateTask(InputFile, Out1, Out2, Out3);
+  }
+  ans.DoTask();
   return 0;
 }
