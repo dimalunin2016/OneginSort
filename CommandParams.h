@@ -13,13 +13,13 @@ void InCaseOfInput(
     int* num_of_curr_input_files) {
 
 
+  ++(*num_of_curr_input_files);
   if (*num_of_curr_input_files >= 2) {
     fprintf (stderr, "Wrong number of input parameters\n");
     assert(false);
   }
 
   strcpy(*InputFileName, param_str);
-  ++(*num_of_curr_input_files);
 }
 
 
@@ -30,6 +30,8 @@ void InCaseOfOutput(
     const char* param_str,
     int* num_of_curr_output_files) {
 
+        
+  ++(*num_of_curr_output_files);
   switch (*num_of_curr_output_files) {
     case 1:
 
@@ -49,8 +51,6 @@ void InCaseOfOutput(
       assert(false);
       break;
   } 
-        
-  ++(*num_of_curr_output_files);
 }
 
 
@@ -74,8 +74,8 @@ void GetCommandParams(int argc, char **argv,
     char* OutputFileName3, bool* is_any_output) {
   
   int opt = 0;
-  int num_of_curr_output_files = 1;
-  int num_of_curr_input_files = 1;
+  int num_of_curr_output_files = 0;
+  int num_of_curr_input_files = 0;
 
   while ((opt = getopt (argc, argv, optString)) != -1) {
     switch (opt) {
