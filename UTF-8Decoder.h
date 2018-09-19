@@ -41,7 +41,11 @@ class Symbol {
   Symbol(const char* str) {
     char a  = str[0];
     size_   = 0;
-    assert(IsStartedByte(a));
+    
+    if (!IsStartedByte(a)) {
+      fprintf (stderr, "Wrong start of a symbol\n");
+      assert(false);
+    }
     for (int i = 7; i > 3; --i) {
       
       if ((a & (1 << i)) != 0) {

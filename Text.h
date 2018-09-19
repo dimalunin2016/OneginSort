@@ -10,8 +10,10 @@
 #include <sys/stat.h>
 #include <stdlib.h>
 
+
 const int MAX_PATH_SIZE = 100;
 const int MAX_COMMAND_SIZE = 100;
+
 
 /**
  * @breif class interpreter of FILE* which close itself in destructor
@@ -28,7 +30,10 @@ class CleverFile {
   void FileToRead(const char* FileName) {
  		
 		file_ = fopen(FileName, "r");
-    assert(file_);
+    if (!file_) {
+      fprintf (stderr, "Can not open file %s\n", FileName);
+      assert(file_);
+    }
   }
  
 
@@ -38,7 +43,10 @@ class CleverFile {
   void FileToWrite(const char* FileName) {
 
     file_ = fopen(FileName, "w");
-    assert(file_);
+    if (!file_) {
+      fprintf (stderr, "Can not open file %s\n", FileName);
+      assert(file_);
+    }
   }
 
 
@@ -78,8 +86,11 @@ class TextLine {
    * @warning the starting char must be the start of a symbol 
    */
   void CreateLine(const char* str) {
-    
-    assert(IsStartedByte(str[0]));
+   
+    if (!IsStartedByte(str[0])) {
+      fprintf (stderr, "Wrong start of a line\n");
+      assert(IsStartedByte(str[0]));
+    }
     symbol_parts_ = str;
 		size_         = 0;
 		for (size_t i = 0; str[i]; ++i) {
@@ -93,7 +104,10 @@ class TextLine {
    */
   void CreateLine(const char* str, size_t size) {
     
-    assert(IsStartedByte(str[0]));
+    if (!IsStartedByte(str[0])) {
+      fprintf (stderr, "Wrong start of a line\n");
+      assert(IsStartedByte(str[0]));
+    }
     symbol_parts_   = str;
 		size_           = size;
   }
@@ -165,7 +179,10 @@ class Text {
     
 		struct stat stat_buf;
     int exit = stat(FileName, &stat_buf);
-    assert(exit == 0);
+    if (exit != 0) {
+      fprintf (stderr, "Can not open file %s\n", FileName);
+      assert(exit == 0);
+    }
     
     size_t size = stat_buf.st_size;
     CleverFile read_file;

@@ -67,6 +67,7 @@ void InCaseOfQuestion(char opt) {
   assert(false);
 }
 
+
 void GetCommandParams(int argc, char **argv, 
     char* InputFileName, 
     char* OutputFileName1, 
@@ -101,9 +102,9 @@ void GetCommandParams(int argc, char **argv,
     }
   }
 
-  if (!(num_of_curr_input_files == 2 && 
-        (num_of_curr_output_files == 1 || 
-         num_of_curr_output_files == 4))) {
+  if (!(num_of_curr_input_files == 1 && 
+        (num_of_curr_output_files == 0 || 
+         num_of_curr_output_files == 3))) {
     fprintf (stderr, "Wrong number of parameters\n"); 
     assert(false);
   }
