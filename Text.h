@@ -29,7 +29,7 @@ class CleverFile {
    */
   void FileToRead(const char* FileName) {
  		
-		file_ = fopen(FileName, "r");
+    file_ = fopen(FileName, "r");
     if (!file_) {
       fprintf (stderr, "Can not open file %s\n", FileName);
       assert(file_);
@@ -78,7 +78,7 @@ class TextLine {
  private:
 
   const char* symbol_parts_;
-	size_t size_;
+  size_t size_;
  public:
 
 
