@@ -29,7 +29,8 @@ bool IsStartedByte(char a) {
  */
 class Symbol {
  private:
-  const char *start_;
+
+  const char* start_;
   size_t size_; 
 
  public:
@@ -143,7 +144,7 @@ class Symbol {
   /**
    * @return size in bytes of symbol
    */
-  size_t GetSymbolByteSize() const {
+  size_t Size() const {
     
     return size_;
   }
@@ -159,7 +160,13 @@ class Symbol {
 
 };
 
-
+void Print(const Symbol& a) {
+  size_t size = a.Size();
+  const char* start = a.GetStartByte();
+  for(size_t i = 0; i < size; ++i) {
+    printf("%c", start[i]);
+  } 
+}
 /**
  * @brief returns true if Symbol is in Russian or English alphapet 
  *    or is numeral
