@@ -103,7 +103,7 @@ void GetCommandParams(int argc, char **argv,
   }
 
   if (!(num_of_curr_input_files == 1 && 
-        (num_of_curr_output_files == 0 || 
+        (num_of_curr_output_files == 0 ||
          num_of_curr_output_files == 3))) {
     fprintf (stderr, "Wrong number of parameters\n"); 
     assert(false);

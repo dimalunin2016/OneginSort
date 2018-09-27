@@ -68,7 +68,7 @@ void CreateStartPosiztion(
     bool reversed) {
 
   *a_str = a.GetStartByte();
-  a_ind_begin = (reversed) ? a.Size() - 1 : 0;
+  a_ind_begin = (reversed) ? a.GetTextLineByteSize() - 1 : 0;
 }
 
 
@@ -126,7 +126,7 @@ bool CompHelper(const TextLine& a, const TextLine& b, bool reversed) {
 /**
  * @brief compares TextLines by the beginning of the word
  */
-bool Comporator(const TextLine& a, const TextLine& b) {
+bool Comparator(const TextLine& a, const TextLine& b) {
   
   return CompHelper(a, b, false);
 }
@@ -135,7 +135,7 @@ bool Comporator(const TextLine& a, const TextLine& b) {
 /**
  * @brief compares TextLines by the ending of the word
  */
-bool RhymeComporator(const TextLine& a, const TextLine& b) {
+bool RhymeComparator(const TextLine& a, const TextLine& b) {
   
   return CompHelper(a, b, true);
 }
@@ -161,10 +161,10 @@ class OneginSortClass {
    *    in which you want to write the result
    */ 
   void CreateTask(
-      const char* InputFile, 
-      const char* OutFile1 = "Sorted.txt",
-      const char* OutFile2 = "RhymeSorted.txt",
-      const char* OutFile3 = "CopyText.txt") {
+                  const char* InputFile, 
+                  const char* OutFile1 = "Sorted.txt",
+                  const char* OutFile2 = "RhymeSorted.txt",
+                  const char* OutFile3 = "CopyText.txt") {
 
     text_.CreateText(InputFile);
     OutFile1_ = OutFile1;
@@ -179,10 +179,10 @@ class OneginSortClass {
    *    in which you want to write the result
    */
   OneginSortClass(
-      const char* InputFile, 
-      const char* OutFile1 = "Sorted.txt",
-      const char* OutFile2 = "RhymeSorted.txt",
-      const char* OutFile3 = "CopyText.txt") {
+                  const char* InputFile, 
+                  const char* OutFile1 = "Sorted.txt",
+                  const char* OutFile2 = "RhymeSorted.txt",
+                  const char* OutFile3 = "CopyText.txt") {
       
       CreateTask(InputFile, OutFile1, OutFile2, OutFile3);
     }
@@ -193,11 +193,10 @@ class OneginSortClass {
    *    all common information about text from input file
    */
   void DoTask() {
- 	  
-	text_.PrintCommonInfo();
-  	text_.Sort(Comporator);
+    text_.PrintCommonInfo(); 
+    std::sort(*text_, *text_ + text_.GetNumberOfLines(), Comparator);
   	text_.PrintCurrentText(OutFile1_);
-  	text_.Sort(RhymeComporator);
+    std::sort(*text_, *text_ + text_.GetNumberOfLines(), RhymeComparator);
   	text_.PrintCurrentText(OutFile2_);
   	text_.PrintOriginText(OutFile3_); 
   }

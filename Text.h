@@ -22,6 +22,7 @@ class CleverFile {
  private:
   
   FILE* file_ = nullptr;
+  const char* FileName_;
  public:
  
   /**
@@ -34,7 +35,7 @@ class CleverFile {
       fprintf (stderr, "Can not open file %s\n", FileName);
       assert(file_);
     }
-    file_ = fopen(FileName, "r");
+    FileName_ = FileName;
   }
  
 
@@ -48,6 +49,7 @@ class CleverFile {
       fprintf (stderr, "Can not open file %s\n", FileName);
       assert(file_);
     }
+    FileName_ = FileName;
   }
 
 
@@ -59,6 +61,19 @@ class CleverFile {
     return file_;
   }  
 
+  
+  size_t GetFileSize() const { 
+    
+    struct stat stat_buf;
+    int exit = stat(FileName_, &stat_buf); 
+    if (exit != 0) {
+      fprintf (stderr, "Can not open file %s\n", FileName_);
+      assert(exit == 0);
+    }
+    
+    return stat_buf.st_size;
+  }
+
 
   /**
    * @breif close file in the end
@@ -68,6 +83,7 @@ class CleverFile {
     fclose(file_);
     file_ = nullptr;
   }
+
 };
 
 
@@ -114,6 +130,18 @@ class TextLine {
   }
 
 
+  Symbol operator [](size_t ind) const {
+    Symbol curr(symbol_parts_);
+    for (size_t i = 0; i < ind; ++i) {
+      if(!curr.GetNext(&curr)) {
+        fprintf (stderr, "Access to an inaccesible piece of memory in operator [] of TextLine\n");
+        assert(0);
+      }
+    }
+    return curr;
+  }
+
+
   /**
    * @return pointer to the starting char
    */
@@ -124,9 +152,9 @@ class TextLine {
 
 
   /**
-   * @return size of line
+   * @return size of line in bytes
    */
-  size_t Size() const {
+  size_t GetTextLineByteSize() const {
   
     return size_;
   }
@@ -153,7 +181,7 @@ class TextLine {
  */
 class Text {
  private:
-
+  
   char* text_             = nullptr;
   TextLine* origin_lines_ = nullptr;
   TextLine* curr_lines_   = nullptr;
@@ -178,19 +206,11 @@ class Text {
 
   void CopyText(const char* FileName) {
     
-    struct stat stat_buf;
-    int exit = stat(FileName, &stat_buf);
-    if (exit != 0) {
-      fprintf (stderr, "Can not open file %s\n", FileName);
-      assert(exit == 0);
-    }
-    
-    size_t size = stat_buf.st_size;
     CleverFile read_file;
     read_file.FileToRead(FileName);
+    size_t size = read_file.GetFileSize();
     text_ = new char[size + 2];
-    fread(text_, sizeof(char), size, read_file.GetFile());
-    
+    fread(text_, sizeof(char), size, read_file.GetFile()); 
     text_[size]         = '\n';
     text_[size + 1]     = '\0';
     text_size_in_bytes_ = size;
@@ -277,7 +297,7 @@ class Text {
     for (size_t i = 0; i < num_of_lines_; ++i) {
       
       const char* a = lines_[i].GetStartByte();
-      
+
       if (write_original) {
         
           fprintf(write_file.GetFile(), "%s\n", a);
@@ -293,6 +313,7 @@ class Text {
   }
 
  public:
+  
   
   Text() {}
 
@@ -331,15 +352,6 @@ class Text {
 
 
   /**
-   * @brief sort text with comparator from parameter, which compares TextLines
-   */
-  void Sort(bool (*comp)(const TextLine& a, const TextLine& b)) {
-
-    std::sort(curr_lines_, curr_lines_ + num_of_lines_, comp); 
-  }
-
-
-  /**
    * @brief print all common information about text in stdout
    */
   void PrintCommonInfo() {
@@ -347,12 +359,43 @@ class Text {
     PrintInfoHelper(stdout);
   } 
  
+  
+  const TextLine& operator [](size_t ind) const {
+    
+    if (num_of_lines_ <= ind) { 
+        fprintf (stderr, "Access to an inaccesible piece of memory in const operator [] of Text\n");
+        assert(0);
+    }
+    return curr_lines_[ind];
+  }
+  
+  
+  TextLine& operator [](size_t ind) {
+    
+    if (num_of_lines_ <= ind) { 
+        fprintf (stderr, "Access to an inaccesible piece of memory in operator [] of Text\n");
+        assert(0);
+    }
+    return curr_lines_[ind];
+  } 
+
+
+  TextLine* operator *() {
+   
+    return curr_lines_;
+  }
+
+
+  size_t GetNumberOfLines() const {
+    
+    return num_of_lines_;
+  }
+
 
   /**
    * @brief print all common information about text in file
    */
   void PrintCommonInfo(const char* FileName) {
-    
     CleverFile write_file;
     write_file.FileToWrite(FileName);
     PrintInfoHelper(write_file.GetFile());
