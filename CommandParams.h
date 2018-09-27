@@ -8,9 +8,9 @@ static const char *optString = "I:O:";
 
 
 void InCaseOfInput(
-    char** InputFileName, 
-    const char* param_str, 
-    int* num_of_curr_input_files) {
+                   char** InputFileName, 
+                   const char* param_str, 
+                   int* num_of_curr_input_files) {
 
 
   ++(*num_of_curr_input_files);
@@ -24,11 +24,11 @@ void InCaseOfInput(
 
 
 void InCaseOfOutput(
-    char** OutputFileName1,
-    char** OutputFileName2,
-    char** OutputFileName3,
-    const char* param_str,
-    int* num_of_curr_output_files) {
+                    char** OutputFileName1,
+                    char** OutputFileName2,
+                    char** OutputFileName3,
+                    const char* param_str,
+                    int* num_of_curr_output_files) {
 
         
   ++(*num_of_curr_output_files);
@@ -69,10 +69,11 @@ void InCaseOfQuestion(char opt) {
 
 
 void GetCommandParams(int argc, char **argv, 
-    char* InputFileName, 
-    char* OutputFileName1, 
-    char* OutputFileName2,
-    char* OutputFileName3, bool* is_any_output) {
+                      char* InputFileName, 
+                      char* OutputFileName1, 
+                      char* OutputFileName2,
+                      char* OutputFileName3, 
+                      bool* is_any_output) {
   
   int opt = 0;
   int num_of_curr_output_files = 0;
