@@ -160,13 +160,7 @@ class Symbol {
 
 };
 
-void Print(const Symbol& a) {
-  size_t size = a.Size();
-  const char* start = a.GetStartByte();
-  for(size_t i = 0; i < size; ++i) {
-    printf("%c", start[i]);
-  } 
-}
+
 /**
  * @brief returns true if Symbol is in Russian or English alphapet 
  *    or is numeral
