@@ -195,10 +195,10 @@ class OneginSortClass {
   void DoTask() {
     text_.PrintCommonInfo(); 
     std::sort(*text_, *text_ + text_.GetNumberOfLines(), Comparator);
-  	text_.PrintCurrentText(OutFile1_);
+    text_.PrintCurrentText(OutFile1_);
     std::sort(*text_, *text_ + text_.GetNumberOfLines(), RhymeComparator);
-  	text_.PrintCurrentText(OutFile2_);
-  	text_.PrintOriginText(OutFile3_); 
+    text_.PrintCurrentText(OutFile2_);
+    text_.PrintOriginText(OutFile3_); 
   }
   
 };
