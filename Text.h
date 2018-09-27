@@ -16,7 +16,7 @@ const int MAX_COMMAND_SIZE = 100;
 
 
 /**
- * @breif class interpreter of FILE* which close itself in destructor
+ * @brief class interpreter of FILE* which close itself in destructor
  */
 class CleverFile {
  private:
@@ -26,7 +26,7 @@ class CleverFile {
  public:
  
   /**
-   * @breif open file to read
+   * @brief open file to read
    */
   void FileToRead(const char* FileName) {
  		
@@ -40,7 +40,7 @@ class CleverFile {
  
 
   /**
-   * @breif open file to write in it
+   * @brief open file to write in it
    */  
   void FileToWrite(const char* FileName) {
 
@@ -76,7 +76,7 @@ class CleverFile {
 
 
   /**
-   * @breif close file in the end
+   * @brief close file in the end
    */
   ~CleverFile() {
     
@@ -88,7 +88,7 @@ class CleverFile {
 
 
 /**
- * @breif class-helper to work with lines of text
+ * @brief class-helper to work with lines of text
  */
 class TextLine {
  private:
@@ -99,7 +99,7 @@ class TextLine {
 
 
   /**
-   * @breif copy pointer from parameter and culculate size of line by itself
+   * @brief copy pointer from parameter and culculate size of line by itself
    * @warning the starting char must be the start of a symbol 
    */
   void CreateLine(const char* str) {
@@ -117,7 +117,7 @@ class TextLine {
 
 
   /**
-   * @breif copy pointer from parameter and copy size from parameter
+   * @brief copy pointer from parameter and copy size from parameter
    */
   void CreateLine(const char* str, size_t size) {
     
@@ -130,6 +130,9 @@ class TextLine {
   }
 
 
+  /**
+  * @brief return symbol witn index 'ind'
+  */
   Symbol operator [](size_t ind) const {
     Symbol curr(symbol_parts_);
     for (size_t i = 0; i < ind; ++i) {
@@ -177,7 +180,7 @@ class TextLine {
 
 
 /**
- * @breif class, which helps to work with texts from files
+ * @brief class, which helps to work with texts from files
  */
 class Text {
  private:
@@ -330,7 +333,7 @@ class Text {
 
 
   /**
-   * @brief decode input file in UTF-8 then copy it and prapare data 
+   * @bref decode input file in UTF-8 then copy it and prapare data 
    *    to work with it
    */
 	Text(const char* FileName) {
@@ -360,6 +363,9 @@ class Text {
   } 
  
   
+  /**
+  * @brief return const Textline by ind
+  */
   const TextLine& operator [](size_t ind) const {
     
     if (num_of_lines_ <= ind) { 
@@ -370,6 +376,9 @@ class Text {
   }
   
   
+  /**
+  * @brief return Textline by ind
+  */
   TextLine& operator [](size_t ind) {
     
     if (num_of_lines_ <= ind) { 
@@ -380,6 +389,9 @@ class Text {
   } 
 
 
+  /**
+  * @brief return pointer to the begining of current array of TextLine
+  */
   TextLine* operator *() {
    
     return curr_lines_;
@@ -403,7 +415,7 @@ class Text {
 
 
   /**
-   * @breif print original text in file
+   * @brief print original text in file
    */
   void PrintOriginText(const char* FileName) const {
     
@@ -412,7 +424,7 @@ class Text {
  
 
   /**
-   * @breif print current text in file
+   * @brief print current text in file
    */
   void PrintCurrentText(const char* FileName) const {
     
@@ -421,7 +433,7 @@ class Text {
 
 
   /**
-   * @breif print current text where lines have tabulation in the beginning
+   * @brief print current text where lines have tabulation in the beginning
    * @note usually tabulation means that this line is part of a poem
    */
   void PrintOnlyPoems(const char* FileName) const {
