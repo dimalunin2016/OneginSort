@@ -132,7 +132,7 @@ class Symbol {
    */
   bool GetNext(Symbol* next) {
       
-    if (start_ == '\0') {
+    if (*start_ == '\0') {
       return false;
     }
 

@@ -58,7 +58,7 @@ void InCaseOfQuestion(char opt) {
   
   if (opt == 'I' || opt == 'O')
     fprintf (stderr, "Option -%c requires an argument.\n", opt);
-  else if (isprint (opt))
+  else if (std::isprint (opt))
     fprintf (stderr, "Unknown option `-%c'.\n", opt);
   else
     fprintf (stderr,
